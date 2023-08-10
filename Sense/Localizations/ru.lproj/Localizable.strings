@@ -1,0 +1,55 @@
+/* 
+  Localizable.strings
+  Sense
+
+  Created by Максим Зотеев on 17.06.2023.
+  
+*/
+"chat" = "Чат";
+"image" = "Картинки";
+"history" = "История";
+"settings" = "Настройки";
+"message" = "Cообщение";
+"copied" = "Скопировано";
+"copy" = "Копировать";
+"share" = "Поделиться";
+"delete" = "Удалить";
+"you" = "Вы";
+"no_chats" = "Чатов нет";
+"nothing_there" = "Здесь пусто";
+"chats" = "Чаты";
+"select_chat" = "Выберите чат";
+"key" = "Ключ";
+"save_to_gallery" = "Сохранить в галерею";
+"generation_example" = "кошка в магазине";
+"response" = "Результат";
+"generate_image" = "Генерация картинок";
+"details" = "Детали";
+"select_item" = "Выберите элемент";
+"error" = "Ошибка";
+"cache" = "Кэш";
+"about_app" = "О приложении";
+"image_cache" = "Кэш картинок";
+"clear" = "Очистить";
+"releases" = "Релизы";
+"developer" = "Разработчик";
+"inspiration" = "Вдохновение";
+"models" = "Модели";
+"chat_model" = "Модель чата";
+"responses" = "Результаты";
+"responses_count" = "Количество результатов";
+"welcome" = "Добро пожаловать в AI";
+"welcome_summary" = "Неофициальный клиент OpenAI";
+"hi" = "Привет";
+"api_key_required" = "API ключ необходим для старта";
+"how_to_get_it" = "Как его получить?";
+"setup_step_1" = "Войдите в свой аккаунт на [OpenAI](https://beta.openai.com/account)";
+"setup_step_2" = "Нажмите на **иконку профиля**";
+"setup_step_3" = "Нажмите на **``View API Keys``**";
+"setup_step_4" = "Нажмите на **``Create new secret key``**";
+"setup_step_5" = "**Скопируйте** его и **продолжите** здесь";
+"proceed" = "Далее";
+"instruction" = "Инструкция";
+"what_for" = "Зачем?";
+"what_for_answer" = "Ключ нужен для доступа к OpenAI API. Он позволяет API понять, кто вы, и авторизовать вас";
+"done" = "Готово";

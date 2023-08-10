@@ -1,0 +1,55 @@
+/* 
+  Localizable.strings
+  Sense
+
+  Created by Максим Зотеев on 17.06.2023.
+  
+*/
+"chat" = "Chat";
+"image" = "Image";
+"history" = "History";
+"settings" = "Settings";
+"message" = "Message";
+"copied" = "Copied";
+"copy" = "Copy";
+"share" = "Share";
+"delete" = "Delete";
+"you" = "You";
+"no_chats" = "No chats";
+"nothing_there" = "Nothing there";
+"chats" = "Chats";
+"select_chat" = "Select chat";
+"key" = "Key";
+"save_to_gallery" = "Save to gallery";
+"generation_example" = "a cat in a mall";
+"response" = "Response";
+"generate_image" = "Generate Image";
+"details" = "Details";
+"select_item" = "Select item";
+"error" = "Error";
+"cache" = "Cache";
+"about_app" = "About";
+"image_cache" = "Image cache";
+"clear" = "Clear";
+"releases" = "Releases";
+"developer" = "Developer";
+"inspiration" = "Inspiration";
+"models" = "Models";
+"chat_model" = "Chat model";
+"responses" = "Responses";
+"responses_count" = "Responses count";
+"welcome" = "Welcome to AI";
+"welcome_summary" = "Unofficial client for OpenAI services";
+"hi" = "Hi";
+"api_key_required" = "API Key is required to start";
+"how_to_get_it" = "How can i get it?";
+"setup_step_1" = "Log in to your account on [OpenAI](https://beta.openai.com/account)";
+"setup_step_2" = "Tap on **profile icon**";
+"setup_step_3" = "Tap **``View API Keys``**";
+"setup_step_4" = "Tap **``Create new secret key``**";
+"setup_step_5" = "**Copy** it and **proceed** there";
+"proceed" = "Proceed";
+"instruction" = "Instruction";
+"what_for" = "What for?";
+"what_for_answer" = "Key is required to access OpenAI API. It helps API to understand who you are and to authorize you";
+"done" = "Done";
