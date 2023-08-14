@@ -34,7 +34,7 @@ struct HistoryView: View {
                         } label: {
                             Image(systemName: "trash")
                         }
-                        .foregroundColor(.red)
+                        .foregroundStyle(.red)
                     }
                 }
             }

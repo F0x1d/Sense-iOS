@@ -18,7 +18,7 @@ struct ApiKeyTutorialView: View {
             Section {
                 HStack {
                     Image(systemName: "key.horizontal")
-                        .foregroundColor(.red)
+                        .foregroundStyle(.red)
                     
                     Text("api_key_required")
                 }
@@ -26,23 +26,23 @@ struct ApiKeyTutorialView: View {
             
             Section("how_to_get_it") {
                 HStack {
-                    Text("1.").foregroundColor(.secondary)
+                    Text("1.").foregroundStyle(.secondary)
                     Text("setup_step_1")
                 }
                 HStack {
-                    Text("2.").foregroundColor(.secondary)
+                    Text("2.").foregroundStyle(.secondary)
                     Text("setup_step_2")
                 }
                 HStack {
-                    Text("3.").foregroundColor(.secondary)
+                    Text("3.").foregroundStyle(.secondary)
                     Text("setup_step_3")
                 }
                 HStack {
-                    Text("4.").foregroundColor(.secondary)
+                    Text("4.").foregroundStyle(.secondary)
                     Text("setup_step_4")
                 }
                 HStack {
-                    Text("5.").foregroundColor(.secondary)
+                    Text("5.").foregroundStyle(.secondary)
                     Text("setup_step_5")
                 }
             }

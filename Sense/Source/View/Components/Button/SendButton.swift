@@ -20,7 +20,7 @@ struct SendButton: View {
             Image(systemName: "arrow.up.forward.circle.fill")
                 .resizable()
                 .frame(width: 22, height: 22)
-                .foregroundColor(.accentColor)
+                .foregroundStyle(.tint)
                 .onTapGesture {
                     onClick()
                 }

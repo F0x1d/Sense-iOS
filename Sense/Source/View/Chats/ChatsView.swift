@@ -37,9 +37,16 @@ struct ChatsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            viewModel.delete(chat)
+                        } label: {
+                            Label("delete", systemImage: "trash")
+                        }
+                    }
                     .id(chat.realmId)
                 }
-                .onDelete { viewModel.delete($0) }
+                .onDelete { viewModel.deleteAt($0) }
                 .id(ChatsViewScrollAnchor.chats)
             }
             .toolbar {

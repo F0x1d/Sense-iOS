@@ -24,6 +24,8 @@ extension KFImage {
                         Label("save_to_gallery", systemImage: "square.and.arrow.down")
                     }
                     
+                    Divider()
+                    
                     Button {
                         UIPasteboard.general.image = image!
                     } label: {

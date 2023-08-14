@@ -26,7 +26,7 @@ struct MessageView: View {
                 
                 Text(message.parseRole)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .padding(.horizontal, 19)
                 
                 if message.fromChatGPT {
@@ -42,7 +42,7 @@ struct MessageView: View {
                 }
                 
                 Text(message.content)
-                    .foregroundColor(message.fromUser ? .white : .primary)
+                    .foregroundStyle(message.fromUser ? .white : .primary)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 12)
                     .background(message.fromUser ? .blue : Color(.secondarySystemBackground))
@@ -71,7 +71,7 @@ struct MessageView: View {
                                 Label(action.title, systemImage: action.icon)
                                     .frame(height: 25)
                             }
-                            .foregroundColor(action.tint)
+                            .foregroundStyle(action.tint)
                             .buttonStyle(.bordered)
                             .cornerRadius(10)
                         } else {
@@ -85,7 +85,7 @@ struct MessageView: View {
                                 Label(action.title, systemImage: action.icon)
                                     .frame(height: 25)
                             }
-                            .foregroundColor(action.tint)
+                            .foregroundStyle(action.tint)
                             .buttonStyle(.bordered)
                             .cornerRadius(10)
                         }

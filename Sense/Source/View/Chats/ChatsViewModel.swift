@@ -37,14 +37,28 @@ class ChatsViewModel: BaseViewModel {
         try? realm.write {
             realm.add(chat)
         }
+        selectedChatId = chat.realmId
     }
     
-    func delete(_ indexSet: IndexSet) {
+    func delete(_ chat: Chat) {
         guard let realm = try? Realm() else { return }
-                
+        guard let chat = realm.object(ofType: Chat.self, forPrimaryKey: chat.realmId) else { return }
+        
+        realm.writeAsync {
+            realm.delete(chat)
+        }
+    }
+    
+    func deleteAt(_ indexSet: IndexSet) {
+        guard let realm = try? Realm() else { return }
+        
         try? realm.write {
             for index in indexSet {
                 guard let chat = realm.object(ofType: Chat.self, forPrimaryKey: chats[index].realmId) else { return }
+                if chat.realmId == selectedChatId {
+                    selectedChatId = nil
+                }
+                
                 realm.delete(chat)
             }
         }

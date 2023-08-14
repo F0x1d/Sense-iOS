@@ -54,6 +54,9 @@ struct ChatView: View {
                         .padding(.horizontal, 12)
                         .background(Color(.secondarySystemBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .onSubmit {
+                            sendMessage()
+                        }
                     
                     SendButton(loading: viewModel.generating || viewModel.loading) {
                         sendMessage()

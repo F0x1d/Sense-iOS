@@ -23,7 +23,7 @@ struct CacheSettingsView: View {
                 } label: {
                     Label("clear", systemImage: "trash")
                 }
-                .foregroundColor(.red)
+                .foregroundStyle(.red)
             }
         }
         .onAppear {

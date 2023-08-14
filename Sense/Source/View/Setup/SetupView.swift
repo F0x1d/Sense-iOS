@@ -29,7 +29,7 @@ struct SetupView: View {
                     .bold()
                 
                 Text("welcome_summary")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(1)
                 
