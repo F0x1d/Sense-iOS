@@ -109,9 +109,10 @@ class ChatViewModel: BaseLoadViewModel {
         responseMessage.generating = true
         
         var addedMessage = false
-                
+        
+        let selectedModel = GPTModel(rawValue: userDefaults.string(forKey: APISettingsViewModel.MODEL) ?? "")
         try await gptRepository.generateMessage(
-            model: userDefaults.string(forKey: APISettingsViewModel.CHAT_MODEL) ?? APISettingsViewModel.CHAT_MODEL_DEFAULT,
+            model: (selectedModel ?? APISettingsViewModel.MODEL_DEFAULT).apiModel,
             messages: chat.messages.asMessages.reversed(),
             apiKey: userDefaults.string(forKey: APISettingsViewModel.API_KEY) ?? APISettingsViewModel.API_KEY_DEFAULT
         ) { (content, cancelled) in

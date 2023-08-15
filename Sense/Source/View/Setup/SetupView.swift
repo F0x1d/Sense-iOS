@@ -36,7 +36,7 @@ struct SetupView: View {
                 Spacer()
                 
                 FilledButton(label: "hi") {
-                    viewModel.path.append(SetupScreen.apiKeyTutorial)
+                    viewModel.path.append(SetupScreen.selectModel)
                 }
                 .padding()
             }
@@ -46,6 +46,8 @@ struct SetupView: View {
                     ApiKeyTutorialView()
                 case .apiKeyEnter:
                     ApiKeyEnterView()
+                case .selectModel:
+                    SetupModelView()
                 }
             }
         }

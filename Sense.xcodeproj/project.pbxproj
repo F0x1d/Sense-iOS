@@ -89,6 +89,9 @@
 		A7C216882A851F0500C9142C /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = A7C216832A851F0500C9142C /* 5.png */; };
 		A7C216892A851F0500C9142C /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = A7C216842A851F0500C9142C /* 1.png */; };
 		A7C2168A2A851F0500C9142C /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A7C216852A851F0500C9142C /* 2.png */; };
+		A7DDAA5F2A8C0B0400761209 /* SetupModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA5E2A8C0B0400761209 /* SetupModelView.swift */; };
+		A7DDAA612A8C167300761209 /* GPTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA602A8C167300761209 /* GPTModel.swift */; };
+		A7DDAA632A8C169100761209 /* GPTModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA622A8C169100761209 /* GPTModelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +174,9 @@
 		A7C216832A851F0500C9142C /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		A7C216842A851F0500C9142C /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		A7C216852A851F0500C9142C /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		A7DDAA5E2A8C0B0400761209 /* SetupModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupModelView.swift; sourceTree = "<group>"; };
+		A7DDAA602A8C167300761209 /* GPTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTModel.swift; sourceTree = "<group>"; };
+		A7DDAA622A8C169100761209 /* GPTModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTModelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +369,7 @@
 				A787D1772A3CEE0F00966E63 /* Network */,
 				A700D5C02A843F2500DE1121 /* MessageAction.swift */,
 				A700D5B92A843E9800DE1121 /* ServerError.swift */,
+				A7DDAA602A8C167300761209 /* GPTModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -473,6 +480,7 @@
 			children = (
 				A787D1A72A3CEE2400966E63 /* SetupView.swift */,
 				A73260842A56E85000361755 /* SetupViewModel.swift */,
+				A7DDAA5E2A8C0B0400761209 /* SetupModelView.swift */,
 				A787D1A82A3CEE2400966E63 /* ApiKey */,
 			);
 			path = Setup;
@@ -544,6 +552,7 @@
 			isa = PBXGroup;
 			children = (
 				A787D1B92A3CEE2400966E63 /* ListAsyncImage.swift */,
+				A7DDAA622A8C169100761209 /* GPTModelView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -739,6 +748,7 @@
 				A787D1EE2A3CEE2400966E63 /* HistoryViewModel.swift in Sources */,
 				A787D1E02A3CEE2400966E63 /* FlippedUpsideDownModifier.swift in Sources */,
 				A787D1872A3CEE0F00966E63 /* GenerateMessageRequestBody.swift in Sources */,
+				A7DDAA612A8C167300761209 /* GPTModel.swift in Sources */,
 				A787D1DB2A3CEE2400966E63 /* CacheSettingsView.swift in Sources */,
 				A787D18D2A3CEE1A00966E63 /* GPTRepository.swift in Sources */,
 				A700D5D22A8440F800DE1121 /* ViewExtensions.swift in Sources */,
@@ -747,6 +757,7 @@
 				A73260872A56EB7B00361755 /* BaseLoadViewModel.swift in Sources */,
 				A700D5BF2A843EE500DE1121 /* URLRequestExtensions.swift in Sources */,
 				A787D1F62A3CEE2400966E63 /* ChatsView.swift in Sources */,
+				A7DDAA5F2A8C0B0400761209 /* SetupModelView.swift in Sources */,
 				A700D5B22A843DAF00DE1121 /* RealmExtensions.swift in Sources */,
 				A700D5D02A8440AA00DE1121 /* SetupScreen.swift in Sources */,
 				A787D1F52A3CEE2400966E63 /* MessageView.swift in Sources */,
@@ -773,6 +784,7 @@
 				A700D5C72A843FC300DE1121 /* UserDefaultsExtensions.swift in Sources */,
 				A787D1852A3CEE0F00966E63 /* ErrorResponse.swift in Sources */,
 				A787D1832A3CEE0F00966E63 /* GenerateMessageResponse.swift in Sources */,
+				A7DDAA632A8C169100761209 /* GPTModelView.swift in Sources */,
 				A787D1882A3CEE0F00966E63 /* GenerateImageRequestBody.swift in Sources */,
 				A787D1602A3CED9F00966E63 /* SenseApp.swift in Sources */,
 				A787D1E92A3CEE2400966E63 /* FilledButton.swift in Sources */,

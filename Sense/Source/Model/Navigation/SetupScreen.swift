@@ -10,4 +10,5 @@ import Foundation
 enum SetupScreen: Hashable {
     case apiKeyTutorial
     case apiKeyEnter
+    case selectModel
 }
