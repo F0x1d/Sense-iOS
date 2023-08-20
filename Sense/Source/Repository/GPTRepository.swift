@@ -24,14 +24,14 @@ final class GPTRepository: BaseRepository {
     }
     
     func generateMessage(
-        model: String,
+        model: GPTModel,
         messages: [Message],
         apiKey: String,
         listener: @escaping StreamDataListener
     ) async throws {
         let body = GenerateMessageRequestBody(
             messages: messages,
-            model: model
+            model: model.apiModel
         )
         
         try await openAIStream(
