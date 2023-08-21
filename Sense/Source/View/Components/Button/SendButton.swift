@@ -21,9 +21,9 @@ struct SendButton: View {
                 .resizable()
                 .frame(width: 22, height: 22)
                 .foregroundStyle(.tint)
-                .onTapGesture {
-                    onClick()
-                }
+                .onTapGesture(perform: onClick)
+                .keyboardShortcut(.return)
+                .onSubmit(onClick)
         }
     }
 }

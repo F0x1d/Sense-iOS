@@ -136,7 +136,7 @@ class ChatViewModel: BaseLoadViewModel {
             }
         }
         
-        if responseMessage.isInvalidated { return }
+        if responseMessage.isInvalidated || chat.isInvalidated { return }
         
         try await realm.asyncWrite {
             responseMessage.generating = false

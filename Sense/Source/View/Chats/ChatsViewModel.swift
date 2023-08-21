@@ -34,10 +34,11 @@ class ChatsViewModel: BaseViewModel {
     func append(_ chat: Chat) {
         guard let realm = try? Realm() else { return }
         
-        try? realm.write {
+        realm.writeAsync {
             realm.add(chat)
+        } onComplete: { [weak self] error in
+            self?.selectedChatId = chat.realmId
         }
-        selectedChatId = chat.realmId
     }
     
     func delete(_ chat: Chat) {
