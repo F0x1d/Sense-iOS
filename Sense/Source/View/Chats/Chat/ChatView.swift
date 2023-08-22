@@ -58,7 +58,7 @@ struct ChatView: View {
                             sendMessage()
                         }
                     
-                    SendButton(loading: viewModel.generating || viewModel.loading) {
+                    SendButton(enabled: !viewModel.generating) {
                         sendMessage()
                     }
                     .padding(.vertical, 7)

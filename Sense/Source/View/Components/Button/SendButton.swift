@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 struct SendButton: View {
-    let loading: Bool
+    var loading: Bool = false
+    var enabled: Bool = true
+    
     let onClick: () -> Void
     
     var body: some View {
@@ -24,6 +26,7 @@ struct SendButton: View {
                 .onTapGesture(perform: onClick)
                 .keyboardShortcut(.return)
                 .onSubmit(onClick)
+                .disabled(!enabled)
         }
     }
 }

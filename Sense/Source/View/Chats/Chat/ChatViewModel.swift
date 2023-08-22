@@ -93,7 +93,7 @@ class ChatViewModel: BaseLoadViewModel {
         userMessage.content = text
         
         try await realm.asyncWrite {
-            if chat.title == nil {
+            if chat.messages.isEmpty {
                 chat.title = text
             }
             
@@ -108,8 +108,11 @@ class ChatViewModel: BaseLoadViewModel {
         responseMessage.content = ""
         responseMessage.generating = true
         
-        var addedMessage = false
-        
+        try await realm.asyncWrite {
+            chat.messages.insertMessage(responseMessage)
+            chat.date = .now
+        }
+                        
         let selectedModel = GPTModel(rawValue: userDefaults.string(forKey: APISettingsViewModel.MODEL) ?? "")
         try await gptRepository.generateMessage(
             model: selectedModel ?? APISettingsViewModel.MODEL_DEFAULT,
@@ -121,18 +124,8 @@ class ChatViewModel: BaseLoadViewModel {
                 return
             }
             
-            if !addedMessage {
-                responseMessage.content = content
-                
-                try await realm.asyncWrite {
-                    chat.messages.insertMessage(responseMessage)
-                    chat.date = .now
-                }
-                addedMessage = true
-            } else {
-                try await realm.asyncWrite {
-                    responseMessage.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
-                }
+            try await realm.asyncWrite {
+                responseMessage.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
             }
         }
         

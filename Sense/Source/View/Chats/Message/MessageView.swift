@@ -41,17 +41,14 @@ struct MessageView: View {
                     Spacer()
                 }
                 
-                Text(message.content)
-                    .foregroundStyle(message.fromUser ? .white : .primary)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 12)
-                    .background(message.fromUser ? .blue : Color(.secondarySystemBackground))
-                    .clipShape(RoundedCorners(
-                        tl: 20,
-                        tr: 20,
-                        bl: message.fromChatGPT ? 5 : 20,
-                        br: message.fromUser ? 5 : 20
-                    ))
+                if message.content.isEmpty {
+                    ProgressView()
+                        .asMessage(with: message)
+                } else {
+                    Text(message.content)
+                        .foregroundStyle(message.fromUser ? .white : .primary)
+                        .asMessage(with: message)
+                }
                 
                 if message.fromChatGPT {
                     Spacer()
@@ -106,5 +103,20 @@ struct MessageView: View {
                 expanded.toggle()
             }
         }
+    }
+}
+
+fileprivate extension View {
+    func asMessage(with message: ChatMessage) -> some View {
+        self
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(message.fromUser ? .blue : Color(.secondarySystemBackground))
+            .clipShape(RoundedCorners(
+                tl: 20,
+                tr: 20,
+                bl: message.fromChatGPT ? 5 : 20,
+                br: message.fromUser ? 5 : 20
+            ))
     }
 }
