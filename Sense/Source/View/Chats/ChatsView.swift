@@ -52,10 +52,7 @@ struct ChatsView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        let chat = Chat()
-                        viewModel.append(chat)
-                        
-                        viewModel.selectedChatId = chat.realmId
+                        viewModel.create()
                     } label: {
                         Image(systemName: "plus")
                     }

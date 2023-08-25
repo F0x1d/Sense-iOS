@@ -31,8 +31,10 @@ class ChatsViewModel: BaseViewModel {
             .store(in: &cancellables)
     }
     
-    func append(_ chat: Chat) {
+    func create() {
         guard let realm = try? Realm() else { return }
+        
+        let chat = Chat()
         
         realm.writeAsync {
             realm.add(chat)
