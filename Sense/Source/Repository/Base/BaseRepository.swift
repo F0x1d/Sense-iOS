@@ -65,7 +65,7 @@ import Alamofire
         let streamTask = afSession.streamRequest(requestUrl, method: .post) { request in
             try request.setJSONBody(body)
             modifier(&request)
-        }.streamTask()
+        }.validate().streamTask()
         
         var content = ""
         var cancelled = false
