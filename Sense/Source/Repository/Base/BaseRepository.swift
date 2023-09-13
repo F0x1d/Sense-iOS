@@ -42,10 +42,9 @@ import Alamofire
         defer {
             endBackgroundTaskNonAsync(backgroundTaskId)
         }
-        
+                
         return try await parseResponse(
-            afSession.request(requestUrl, method: .post) { request in
-                try request.setJSONBody(body)
+            afSession.request(requestUrl, method: .post, parameters: body, encoder: JSONParameterEncoder.openAI) { request in
                 modifier(&request)
             }.serializingDecodable(resultType).response
         )
@@ -62,8 +61,7 @@ import Alamofire
             endBackgroundTaskNonAsync(backgroundTaskId)
         }
         
-        let streamTask = afSession.streamRequest(requestUrl, method: .post) { request in
-            try request.setJSONBody(body)
+        let streamTask = afSession.streamRequest(requestUrl, method: .post, parameters: body, encoder: JSONParameterEncoder.openAI) { request in
             modifier(&request)
         }.validate().streamTask()
         

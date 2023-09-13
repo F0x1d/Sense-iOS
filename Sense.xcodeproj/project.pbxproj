@@ -87,6 +87,7 @@
 		A7AE6BA82A94E8D200CCA29B /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AE6BA52A94E8D100CCA29B /* 2.png */; };
 		A7AE6BA92A94E8D200CCA29B /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AE6BA62A94E8D200CCA29B /* 1.png */; };
 		A7AE6BAA2A94E8D200CCA29B /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AE6BA72A94E8D200CCA29B /* 3.png */; };
+		A7DAA9692AB1D5FA0032AB66 /* JSONParameterEncoderExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DAA9682AB1D5FA0032AB66 /* JSONParameterEncoderExtensions.swift */; };
 		A7DDAA5F2A8C0B0400761209 /* SetupModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA5E2A8C0B0400761209 /* SetupModelView.swift */; };
 		A7DDAA612A8C167300761209 /* GPTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA602A8C167300761209 /* GPTModel.swift */; };
 		A7DDAA632A8C169100761209 /* GPTModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DDAA622A8C169100761209 /* GPTModelView.swift */; };
@@ -170,6 +171,7 @@
 		A7AE6BA52A94E8D100CCA29B /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		A7AE6BA62A94E8D200CCA29B /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		A7AE6BA72A94E8D200CCA29B /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		A7DAA9682AB1D5FA0032AB66 /* JSONParameterEncoderExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoderExtensions.swift; sourceTree = "<group>"; };
 		A7DDAA5E2A8C0B0400761209 /* SetupModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupModelView.swift; sourceTree = "<group>"; };
 		A7DDAA602A8C167300761209 /* GPTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTModel.swift; sourceTree = "<group>"; };
 		A7DDAA622A8C169100761209 /* GPTModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTModelView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				A700D5CD2A84408500DE1121 /* DoubleExtension.swift */,
 				A700D5D12A8440F800DE1121 /* ViewExtensions.swift */,
 				A700D5D32A84410900DE1121 /* KFImageExtensions.swift */,
+				A7DAA9682AB1D5FA0032AB66 /* JSONParameterEncoderExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				A787D1E52A3CEE2400966E63 /* ApiKeyFieldView.swift in Sources */,
 				A75748582A56D810004B8AE7 /* DefaultsModule.swift in Sources */,
 				A787D1DA2A3CEE2400966E63 /* SettingsView.swift in Sources */,
+				A7DAA9692AB1D5FA0032AB66 /* JSONParameterEncoderExtensions.swift in Sources */,
 				A700D5BA2A843E9800DE1121 /* ServerError.swift in Sources */,
 				A700D5B02A843D3100DE1121 /* PublisherExtensions.swift in Sources */,
 				A787D1DE2A3CEE2400966E63 /* APISettingsView.swift in Sources */,
