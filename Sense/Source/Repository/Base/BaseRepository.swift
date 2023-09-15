@@ -68,6 +68,10 @@ import Alamofire
         var content = ""
         var cancelled = false
         for await stream in streamTask.streamingStrings() {
+            if let completion = stream.completion, let error = completion.error {
+                throw error
+            }
+            
             if let string = stream.value {
                 if let error = try? JSONDecoder().decode(
                     ErrorResponse.self, 
@@ -92,10 +96,6 @@ import Alamofire
                 try await listener(content, &cancelled)
                 
                 if cancelled { break }
-            }
-            
-            if let error = stream.error {
-                throw error
             }
         }
     }
