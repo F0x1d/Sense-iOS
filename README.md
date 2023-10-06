@@ -3,9 +3,9 @@ OpenAI client for iOS. Supports ChatGPT and Image Generation.
 
 # Screenshots
 <p align="center">
-  <img src="https://github.com/F0x1d/Sense-iOS/blob/main/Sense/Preview%20Content/Screenshots/1.png?raw=true" width="30%" />
-  <img src="https://github.com/F0x1d/Sense-iOS/blob/main/Sense/Preview%20Content/Screenshots/2.png?raw=true" width="30%" />
-  <img src="https://github.com/F0x1d/Sense-iOS/blob/main/Sense/Preview%20Content/Screenshots/3.png?raw=true" width="30%" />
+  <img src="./Sense/Preview Content/Screenshots/1.png" width="30%" />
+  <img src="./Sense/Preview Content/Screenshots/2.png" width="30%" />
+  <img src="./Sense/Preview Content/Screenshots/3.png" width="30%" />
 </p>
 
 # Download
