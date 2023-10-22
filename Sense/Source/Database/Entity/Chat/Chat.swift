@@ -6,12 +6,20 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class Chat: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var realmId: ObjectId
+@Model
+class Chat {
+    var title: String? = nil
+    var date = Date()
     
-    @Persisted var title: String? = nil
-    @Persisted var date = Date()
-    @Persisted var messages = RealmSwift.List<ChatMessage>()
+    @Relationship(
+        deleteRule: .cascade,
+        inverse: \ChatMessage.chat
+    ) var messages = [ChatMessage]()
+    
+    init(title: String? = nil, date: Date = Date()) {
+        self.title = title
+        self.date = date
+    }
 }

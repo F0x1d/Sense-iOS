@@ -6,15 +6,21 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class ChatMessage: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var realmId: ObjectId
+@Model
+class ChatMessage {
+    var role: String
+    var content: String
+    var date = Date()
+    var generating = false
     
-    @Persisted var role: String
-    @Persisted var content: String
-    @Persisted var date = Date()
-    @Persisted var generating = false
+    var chat: Chat?
     
-    @Persisted(originProperty: "messages") var assignee: LinkingObjects<Chat>
+    init(role: String, content: String, date: Date = Date(), generating: Bool = false) {
+        self.role = role
+        self.content = content
+        self.date = date
+        self.generating = generating
+    }
 }

@@ -58,3 +58,4 @@
 "gpt-4-32k-desc" = "Same as above, but more symbols for chat at extended cost";
 "gpt-3.5-desc" = "Default model";
 "gpt-3.5-16k-desc" = "Default model, but more symbols for chat at extended cost";
+"in_message_error" = "[Sense Error] %@";

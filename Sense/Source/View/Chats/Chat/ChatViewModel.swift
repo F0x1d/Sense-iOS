@@ -7,17 +7,19 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
 import Factory
-import Combine
 import AlertKit
 
 class ChatViewModel: BaseLoadViewModel {
-    let id: ObjectId
-    @Published var chat: Chat? = nil
+    var chat: Chat
     
     @Published var text = ""
     @Published var generating = false
+        
+    @Injected(\.gptRepository) private var gptRepository
+    @Injected(\.userDefaults) private var userDefaults
+    @Injected(\.modelContext) private var modelContext
     
     lazy var messageActions = [
         MessageAction(
@@ -37,119 +39,72 @@ class ChatViewModel: BaseLoadViewModel {
         MessageAction(
             title: String(localized: "delete"),
             icon: "trash",
-            onClick: { [weak self] message in self?.delete(message: message) ?? false },
+            onClick: { [weak self] message in
+                self?.modelContext.delete(message)
+                return true
+            },
             tint: .red
         )
     ]
-        
-    @Injected(\.gptRepository) private var gptRepository
-    @Injected(\.userDefaults) private var userDefaults
     
-    init(_ id: ObjectId) {
-        self.id = id
-        super.init()
-        
-        guard let realm = try? Realm() else { return }
-        
-        realm
-            .objects(Chat.self)
-            .where { $0.realmId == id }
-            .collectionPublisher
-            .subscribe(on: backgroundQueue)
-            .freeze()
-            .map { $0.first }
-            .removeDuplicates()
-            .assertNoFailure()
-            .receive(on: mainQueue)
-            .assign(to: \.chat, on: self)
-            .store(in: &cancellables)
-            
-                
-        realm
-            .objects(ChatMessage.self)
-            .where { $0.generating && $0.assignee.realmId == id }
-            .collectionPublisher
-            .subscribe(on: backgroundQueue)
-            .freeze()
-            .map {
-                $0.contains {
-                    $0.generating
-                }
-            }
-            .removeDuplicates()
-            .assertNoFailure()
-            .receive(on: mainQueue)
-            .assignWithAnimation(to: \.generating, on: self)
-            .store(in: &cancellables)
+    init(_ chat: Chat) {
+        self.chat = chat
     }
     
     override func provideData() async throws {
-        let realm = try await Realm()
+        let userMessage = ChatMessage(role: "user", content: text)
         
-        guard let chat = chat?.thaw() else { return }
-                
-        let userMessage = ChatMessage()
-        userMessage.role = "user"
-        userMessage.content = text
-        
-        try await realm.asyncWrite {
-            if chat.messages.isEmpty {
-                chat.title = text
-            }
-            
-            chat.messages.insertMessage(userMessage)
-            chat.date = .now
+        if chat.messages.isEmpty {
+            chat.title = text
         }
-                
+        
+        chat.messages.append(userMessage)
+        chat.date = .now
+        
         text = ""
         
-        let currentChatMessages: [Message] = chat.messages.asMessages.reversed()
-        
-        let responseMessage = ChatMessage()
-        responseMessage.role = "assistant"
-        responseMessage.content = ""
-        responseMessage.generating = true
-        
-        try await realm.asyncWrite {
-            chat.messages.insertMessage(responseMessage)
-            chat.date = .now
+        let currentChatMessages = chat.messages
+        let sortChatMessagesTask = Task { @RepositoryActor in
+            currentChatMessages.asSorted.asMessages
         }
-                        
+        
+        let responseMessage = ChatMessage(role: "assistant", content: "", generating: true)
+        
+        chat.messages.append(responseMessage)
+        chat.date = .now
+                                
         let selectedModel = GPTModel(rawValue: userDefaults.string(forKey: APISettingsViewModel.MODEL) ?? "")
         try await gptRepository.generateMessage(
             model: selectedModel ?? APISettingsViewModel.MODEL_DEFAULT,
-            messages: currentChatMessages,
+            messages: await sortChatMessagesTask.value,
             apiKey: userDefaults.string(forKey: APISettingsViewModel.API_KEY) ?? APISettingsViewModel.API_KEY_DEFAULT
         ) { (content, cancelled) in
-            if responseMessage.isInvalidated {
+            if responseMessage.isDeleted {
                 cancelled = true
                 return
             }
             
-            try await realm.asyncWrite {
-                responseMessage.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
-            }
+            responseMessage.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         
-        if responseMessage.isInvalidated || chat.isInvalidated { return }
-        
-        try await realm.asyncWrite {
-            responseMessage.generating = false
-            chat.date = .now
-        }
+        responseMessage.generating = false
+        chat.date = .now
     }
     
     override func handleError(_ error: Error) async {
-        try? await Realm().markAsNotGeneratingIn(chatId: id)
-    }
-    
-    func delete(message: ChatMessage) -> Bool {
-        guard let realm = try? Realm() else { return false }
-        guard let message = realm.object(ofType: ChatMessage.self, forPrimaryKey: message.realmId) else { return false }
+        var descriptor = FetchDescriptor<ChatMessage>()
         
-        realm.writeAsync {
-            realm.delete(message)
+        let chatId = chat.persistentModelID
+        descriptor.predicate = #Predicate {
+            $0.generating && $0.chat?.persistentModelID == chatId
         }
-        return true
+        
+        guard let generatingMessages = try? modelContext.fetch(descriptor) else { return }
+        
+        let newMessageContent = String(format: String(localized: "in_message_error"), arguments: [error.localizedDescription])
+        for message in generatingMessages {
+            message.content = newMessageContent
+            message.generating = false
+        }
     }
 }

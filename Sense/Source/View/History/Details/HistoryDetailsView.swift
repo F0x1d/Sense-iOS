@@ -7,29 +7,27 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
 import Factory
 
 struct HistoryDetailsView: View {
     
     @StateObject private var viewModel: HistoryDetailsViewModel
     
-    init(id: ObjectId) {
-        _viewModel = StateObject(wrappedValue: Container.shared.historyDetailsViewModel(id))
+    init(image: GeneratedImage) {
+        _viewModel = StateObject(wrappedValue: Container.shared.historyDetailsViewModel(image))
     }
     
     var body: some View {
         List {
-            if let image = viewModel.image {
-                Section {
-                    Text(image.prompt)
-                        .textSelection(.enabled)
-                }
-                
-                Section("response") {
-                    ForEach(image.urls) { url in
-                        ListAsyncImage(url: url)
-                    }
+            Section {
+                Text(viewModel.image.prompt)
+                    .textSelection(.enabled)
+            }
+            
+            Section("response") {
+                ForEach(viewModel.image.urls) { url in
+                    ListAsyncImage(url: url)
                 }
             }
         }

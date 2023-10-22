@@ -6,12 +6,17 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-class GeneratedImage: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var realmId: ObjectId
+@Model
+class GeneratedImage {
+    var prompt: String
+    var urls: [String]
+    var date = Date()
     
-    @Persisted var prompt: String
-    @Persisted var urls = RealmSwift.List<String>()
-    @Persisted var date = Date()
+    init(prompt: String, urls: [String], date: Date = Date()) {
+        self.prompt = prompt
+        self.urls = urls
+        self.date = date
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
 import Factory
 
 class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
@@ -16,6 +16,7 @@ class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
     
     @Injected(\.gptRepository) private var gptRepository
     @Injected(\.userDefaults) private var userDefaults
+    @Injected(\.modelContext) private var modelContext
     
     override func beforeProvision() -> Bool {
         withAnimation {
@@ -31,15 +32,7 @@ class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
             apiKey: userDefaults.string(forKey: APISettingsViewModel.API_KEY) ?? APISettingsViewModel.API_KEY_DEFAULT
         )
         
-        let realm = try await Realm()
-        
-        let image = GeneratedImage()
-        image.prompt = prompt
-        image.urls.append(objectsIn: urls)
-        
-        try await realm.asyncWrite {
-            realm.add(image)
-        }
+        modelContext.insert(GeneratedImage(prompt: prompt, urls: urls))
         
         return urls
     }

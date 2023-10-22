@@ -8,17 +8,28 @@
 import Foundation
 import SwiftUI
 import Factory
+import SwiftData
 
 struct ChatsView: View {
         
     @InjectedObject(\.chatsViewModel) private var viewModel
     
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query(
+        sort: \Chat.date,
+        order: .reverse,
+        animation: .spring
+    ) private var chats: [Chat]
+    
     var body: some View {
         NavigationSplitView {
-            List(selection: $viewModel.selectedChatId) {
-                ForEach(viewModel.chats) { chat in
-                    NavigationLink(value: chat.realmId) {
-                        if let content = chat.messages.first?.content {
+            List(selection: $viewModel.selectedChat) {
+                ForEach(chats) { chat in
+                    NavigationLink(value: chat) {
+                        // It looks like there is still no way to avoid it
+                        // Related objects are in unordered set
+                        if let content = chat.messages.asSorted.last?.content {
                             VStack(alignment: .leading) {
                                 Text(chat.title ?? "")
                                     .lineLimit(1)
@@ -39,20 +50,27 @@ struct ChatsView: View {
                     }
                     .contextMenu {
                         Button(role: .destructive) {
-                            viewModel.delete(chat)
+                            modelContext.delete(chat)
                         } label: {
                             Label("delete", systemImage: "trash")
                         }
                     }
-                    .id(chat.realmId)
+                    .id(chat.id)
                 }
-                .onDelete { viewModel.deleteAt($0) }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        modelContext.delete(chats[index])
+                    }
+                }
                 .id(ChatsViewScrollAnchor.chats)
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        viewModel.create()
+                        let chat = Chat()
+                        modelContext.insert(chat)
+                        
+                        viewModel.selectedChat = chat
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -60,9 +78,9 @@ struct ChatsView: View {
             }
             .navigationTitle("chats")
         } detail: {
-            if let chatId = viewModel.selectedChatId {
-                ChatView(id: chatId)
-                    .id(chatId)
+            if let chat = viewModel.selectedChat {
+                ChatView(chat: chat)
+                    .id(chat.id)
             } else {
                 Text("select_chat")
                     .font(.title)

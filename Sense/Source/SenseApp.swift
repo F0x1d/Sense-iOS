@@ -7,23 +7,18 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
+import Factory
 
 @main
 struct SenseApp: SwiftUI.App {
     
-    init() {
-        let config = Realm.Configuration(schemaVersion: 3)
-        Realm.Configuration.defaultConfiguration = config
-        
-        Task { @MainActor in
-            try? await Realm().markAsNotGenerating()
-        }
-    }
+    @State private var modelContainer = Container.shared.modelContainer()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(modelContainer)
         }
     }
 }

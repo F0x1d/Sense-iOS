@@ -7,12 +7,9 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
 
 struct MessageView: View {
     let message: ChatMessage
-    let index: Int
-    let messagesCount: Int
     let actions: [MessageAction]
     
     @State private var expanded = false
@@ -96,8 +93,6 @@ struct MessageView: View {
                 .padding(.top, 7)
             }
         }
-        .padding(.bottom, index == 0 ? 10 : 5)
-        .padding(.top, index + 1 == messagesCount ? 10 : 5)
         .onTapGesture {
             withAnimation(.spring()) {
                 expanded.toggle()

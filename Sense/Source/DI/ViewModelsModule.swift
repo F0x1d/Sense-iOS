@@ -7,7 +7,7 @@
 
 import Foundation
 import Factory
-import RealmSwift
+import SwiftData
 
 @MainActor extension Container {
     
@@ -23,7 +23,7 @@ import RealmSwift
         self { ChatsViewModel() }.singleton
     }
     
-    var chatViewModel: ParameterFactory<ObjectId, ChatViewModel> {
+    var chatViewModel: ParameterFactory<Chat, ChatViewModel> {
         self { ChatViewModel($0) }
     }
     
@@ -35,7 +35,7 @@ import RealmSwift
         self { HistoryViewModel() }.singleton
     }
     
-    var historyDetailsViewModel: ParameterFactory<ObjectId, HistoryDetailsViewModel> {
+    var historyDetailsViewModel: ParameterFactory<GeneratedImage, HistoryDetailsViewModel> {
         self { HistoryDetailsViewModel($0) }
     }
     

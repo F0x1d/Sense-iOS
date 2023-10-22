@@ -61,8 +61,8 @@ struct ContentView: View {
                     if selectedTab == viewModel.selectedTab {
                         switch (selectedTab) {
                         case .chat:
-                            if chatsViewModel.selectedChatId != nil {
-                                chatsViewModel.selectedChatId = nil
+                            if chatsViewModel.selectedChat != nil {
+                                chatsViewModel.selectedChat = nil
                             } else {
                                 scrollViewProxy.scrollTo(ChatsViewScrollAnchor.chats, anchor: .bottom)
                             }

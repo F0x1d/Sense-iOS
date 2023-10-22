@@ -7,16 +7,35 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
 import AlertKit
 import Factory
 
 struct ChatView: View {
-    
     @StateObject private var viewModel: ChatViewModel
+    
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query private var messages: [ChatMessage]
+    @Query private var generatingMessages: [ChatMessage]
         
-    init(id: ObjectId) {
-        _viewModel = StateObject(wrappedValue: Container.shared.chatViewModel(id))
+    init(chat: Chat) {
+        _viewModel = StateObject(wrappedValue: Container.shared.chatViewModel(chat))
+        
+        let chatId = chat.persistentModelID
+        _messages = Query(
+            filter: #Predicate {
+                $0.chat?.persistentModelID == chatId
+            }, 
+            sort: \.date,
+            order: .reverse,
+            animation: .spring
+        )
+        _generatingMessages = Query(
+            filter: #Predicate { 
+                $0.generating && $0.chat?.persistentModelID == chatId
+            }
+        )
     }
         
     var body: some View {
@@ -25,24 +44,23 @@ struct ChatView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                let messages = viewModel.chat?.messages ?? List<ChatMessage>()
-                
                 if !messages.isEmpty { Divider() }
                 
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(messages) { message in
+                            let index = messages.firstIndex(of: message) ?? 0
+                            
                             MessageView(
                                 message: message,
-                                index: messages.firstIndex(of: message)!,
-                                messagesCount: messages.count,
                                 actions: viewModel.messageActions
                             )
-                            .id(message.realmId)
+                            .padding(.bottom, index == 0 ? 10 : 5)
+                            .padding(.top, index + 1 == messages.count ? 10 : 5)
+                            .id(message.id)
                         }
                         .flippedUpsideDown()
                     }
-                    .animation(.spring(), value: messages.count) // Avoiding animation on text changes during generation
                 }
                 .flippedUpsideDown()
                 
@@ -58,9 +76,10 @@ struct ChatView: View {
                             sendMessage()
                         }
                     
-                    SendButton(enabled: !viewModel.generating) {
+                    SendButton(enabled: generatingMessages.count == 0) {
                         sendMessage()
                     }
+                    .animation(.default, value: generatingMessages.count)
                     .padding(.vertical, 7)
                 }
                 .padding(.horizontal)
@@ -69,7 +88,7 @@ struct ChatView: View {
         }
         .toastingErrors(with: viewModel)
         .scrollDismissesKeyboard(.interactively)
-        .navigationTitle(viewModel.chat?.title ?? "")
+        .navigationTitle(viewModel.chat.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
     }
     
