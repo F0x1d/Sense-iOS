@@ -28,7 +28,6 @@ struct HistoryView: View {
             List(selection: $viewModel.selectedImage) {
                 ForEach(images) { image in
                     NavigationLink(image.prompt, value: image)
-                        .id(image.id)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {

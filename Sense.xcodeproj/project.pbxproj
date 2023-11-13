@@ -24,6 +24,7 @@
 		A700D5D42A84410900DE1121 /* KFImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A700D5D32A84410900DE1121 /* KFImageExtensions.swift */; };
 		A700D60B2A844D5800DE1121 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A700D60A2A844D5800DE1121 /* Message.swift */; };
 		A70419F52A81241900A4B606 /* HistoryDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70419F42A81241900A4B606 /* HistoryDetailsViewModel.swift */; };
+		A70C5A422B00F8D0009686BB /* ChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C5A412B00F8D0009686BB /* ChatItemView.swift */; };
 		A70F99302A66D003009AED6D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A70F992F2A66D003009AED6D /* Kingfisher */; };
 		A73260832A56E76A00361755 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73260822A56E76A00361755 /* ContentViewModel.swift */; };
 		A73260852A56E85000361755 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73260842A56E85000361755 /* SetupViewModel.swift */; };
@@ -108,6 +109,7 @@
 		A700D5D32A84410900DE1121 /* KFImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFImageExtensions.swift; sourceTree = "<group>"; };
 		A700D60A2A844D5800DE1121 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A70419F42A81241900A4B606 /* HistoryDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailsViewModel.swift; sourceTree = "<group>"; };
+		A70C5A412B00F8D0009686BB /* ChatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatItemView.swift; sourceTree = "<group>"; };
 		A73260822A56E76A00361755 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		A73260842A56E85000361755 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		A73260862A56EB7B00361755 /* BaseLoadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoadViewModel.swift; sourceTree = "<group>"; };
@@ -229,6 +231,15 @@
 				A700D5CF2A8440AA00DE1121 /* SetupScreen.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		A70C5A402B00F8C2009686BB /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				A787D1CB2A3CEE2400966E63 /* MessageView.swift */,
+				A70C5A412B00F8D0009686BB /* ChatItemView.swift */,
+			);
+			path = Item;
 			sourceTree = "<group>";
 		};
 		A71440A52A59F1B800CF2F39 /* Content */ = {
@@ -493,6 +504,7 @@
 		A787D1AC2A3CEE2400966E63 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				A7DDAA622A8C169100761209 /* GPTModelView.swift */,
 				A787D1AD2A3CEE2400966E63 /* SettingsTextField */,
 			);
 			path = Settings;
@@ -536,7 +548,6 @@
 			isa = PBXGroup;
 			children = (
 				A787D1B92A3CEE2400966E63 /* ListAsyncImage.swift */,
-				A7DDAA622A8C169100761209 /* GPTModelView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -573,7 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				A787D1C72A3CEE2400966E63 /* Chat */,
-				A787D1CA2A3CEE2400966E63 /* Message */,
+				A70C5A402B00F8C2009686BB /* Item */,
 				A787D1CC2A3CEE2400966E63 /* ChatsView.swift */,
 				A787D1CD2A3CEE2400966E63 /* ChatsViewModel.swift */,
 			);
@@ -587,14 +598,6 @@
 				A787D1C82A3CEE2400966E63 /* ChatViewModel.swift */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		A787D1CA2A3CEE2400966E63 /* Message */ = {
-			isa = PBXGroup;
-			children = (
-				A787D1CB2A3CEE2400966E63 /* MessageView.swift */,
-			);
-			path = Message;
 			sourceTree = "<group>";
 		};
 		A787D1CF2A3CEE2400966E63 /* Base */ = {
@@ -751,6 +754,7 @@
 				A73260852A56E85000361755 /* SetupViewModel.swift in Sources */,
 				A757485D2A56D9C5004B8AE7 /* CacheSettingsViewModel.swift in Sources */,
 				A75748602A56DED6004B8AE7 /* APISettingsViewModel.swift in Sources */,
+				A70C5A422B00F8D0009686BB /* ChatItemView.swift in Sources */,
 				A700D5B62A843E0F00DE1121 /* ChatMessage.swift in Sources */,
 				A787D1E32A3CEE2400966E63 /* ApiKeyTutorialView.swift in Sources */,
 				A700D5BD2A843EC300DE1121 /* RepositoryActor.swift in Sources */,

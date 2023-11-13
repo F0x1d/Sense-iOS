@@ -15,7 +15,7 @@ struct ChatsView: View {
     @InjectedObject(\.chatsViewModel) private var viewModel
     
     @Environment(\.modelContext) private var modelContext
-    
+        
     @Query(
         sort: \Chat.date,
         order: .reverse,
@@ -27,26 +27,7 @@ struct ChatsView: View {
             List(selection: $viewModel.selectedChat) {
                 ForEach(chats) { chat in
                     NavigationLink(value: chat) {
-                        // It looks like there is still no way to avoid it
-                        // Related objects are in unordered set
-                        if let content = chat.messages.asSorted.last?.content {
-                            VStack(alignment: .leading) {
-                                Text(chat.title ?? "")
-                                    .lineLimit(1)
-                                    .font(.title3)
-                                    .bold()
-                                
-                                Spacer()
-                                    .frame(height: 5)
-                                
-                                Text(content)
-                                    .lineLimit(1)
-                                    .foregroundStyle(.secondary)
-                            }
-                        } else {
-                            Text("nothing_there")
-                                .foregroundStyle(.secondary)
-                        }
+                        ChatItemView(chat: chat)
                     }
                     .contextMenu {
                         Button(role: .destructive) {
@@ -55,7 +36,6 @@ struct ChatsView: View {
                             Label("delete", systemImage: "trash")
                         }
                     }
-                    .id(chat.id)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {

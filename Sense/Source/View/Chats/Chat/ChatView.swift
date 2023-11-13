@@ -18,6 +18,8 @@ struct ChatView: View {
     
     @Query private var messages: [ChatMessage]
     @Query private var generatingMessages: [ChatMessage]
+    
+    @State private var scrolledToBottom = false
         
     init(chat: Chat) {
         _viewModel = StateObject(wrappedValue: Container.shared.chatViewModel(chat))
@@ -28,7 +30,6 @@ struct ChatView: View {
                 $0.chat?.persistentModelID == chatId
             }, 
             sort: \.date,
-            order: .reverse,
             animation: .spring
         )
         _generatingMessages = Query(
@@ -39,52 +40,67 @@ struct ChatView: View {
     }
         
     var body: some View {
-        ZStack {
-            Color(.systemBackground)
-                .ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                if !messages.isEmpty { Divider() }
-                
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(messages) { message in
-                            let index = messages.firstIndex(of: message) ?? 0
-                            
-                            MessageView(
-                                message: message,
-                                actions: viewModel.messageActions
-                            )
-                            .padding(.bottom, index == 0 ? 10 : 5)
-                            .padding(.top, index + 1 == messages.count ? 10 : 5)
-                            .id(message.id)
-                        }
-                        .flippedUpsideDown()
+        VStack(spacing: 0) {
+            ScrollViewReader { proxy in
+                List {
+                    ForEach(messages) { message in
+                        MessageView(message: message)
+                            .contextMenu {
+                                Button {
+                                    UIPasteboard.general.string = message.content
+                                    AlertKitAPI.present(title: String(localized: "copied"), icon: .done, style: .iOS17AppleMusic, haptic: .success)
+                                } label: {
+                                    Label("copy", systemImage: "doc.on.doc")
+                                }
+                                
+                                ShareLink(item: message.content) {
+                                    Label("share", systemImage: "square.and.arrow.up")
+                                }
+                                
+                                Button(role: .destructive) {
+                                    modelContext.delete(message)
+                                } label: {
+                                    Label("delete", systemImage: "trash")
+                                }
+                            }
+                            .padding(.vertical, 5)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .id(message)
                     }
                 }
-                .flippedUpsideDown()
-                
-                if !messages.isEmpty { Divider() }
-                
-                HStack(alignment: .bottom) {
-                    TextField("message", text: $viewModel.text, axis: .vertical)
-                        .padding(.vertical, 7)
-                        .padding(.horizontal, 12)
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .onSubmit {
-                            sendMessage()
-                        }
-                    
-                    SendButton(enabled: generatingMessages.count == 0) {
+                .onAppear {
+                    if (!scrolledToBottom) {
+                        proxy.scrollTo(messages.last, anchor: .bottom)
+                        scrolledToBottom = true
+                    }
+                }
+                .onChange(of: messages.last?.content, initial: false) { old, new in
+                    proxy.scrollTo(messages.last, anchor: .bottom)
+                }
+                .listStyle(.plain)
+            }
+            
+            if !messages.isEmpty { Divider() }
+            
+            HStack(alignment: .bottom) {
+                TextField("message", text: $viewModel.text, axis: .vertical)
+                    .padding(.vertical, 7)
+                    .padding(.horizontal, 12)
+                    .background(Color(.secondarySystemBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .onSubmit {
                         sendMessage()
                     }
-                    .animation(.default, value: generatingMessages.count)
-                    .padding(.vertical, 7)
+                
+                SendButton(enabled: generatingMessages.isEmpty) {
+                    sendMessage()
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .animation(.default, value: generatingMessages.count)
+                .padding(.vertical, 7)
             }
+            .padding(.horizontal)
+            .padding(.vertical, 10)
         }
         .toastingErrors(with: viewModel)
         .scrollDismissesKeyboard(.interactively)

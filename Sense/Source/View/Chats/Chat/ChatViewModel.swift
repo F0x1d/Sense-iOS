@@ -9,43 +9,16 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Factory
-import AlertKit
 
 class ChatViewModel: BaseLoadViewModel {
-    var chat: Chat
+    let chat: Chat
     
     @Published var text = ""
     @Published var generating = false
-        
+            
     @Injected(\.gptRepository) private var gptRepository
     @Injected(\.userDefaults) private var userDefaults
     @Injected(\.modelContext) private var modelContext
-    
-    lazy var messageActions = [
-        MessageAction(
-            title: String(localized: "copy"),
-            icon: "doc.on.doc",
-            onClick: { message in
-                UIPasteboard.general.string = message.content
-                AlertKitAPI.present(title: String(localized: "copied"), icon: .done, style: .iOS17AppleMusic, haptic: .success)
-                return true
-            }
-        ),
-        MessageAction(
-            title: String(localized: "share"),
-            icon: "square.and.arrow.up",
-            type: "share"
-        ),
-        MessageAction(
-            title: String(localized: "delete"),
-            icon: "trash",
-            onClick: { [weak self] message in
-                self?.modelContext.delete(message)
-                return true
-            },
-            tint: .red
-        )
-    ]
     
     init(_ chat: Chat) {
         self.chat = chat
