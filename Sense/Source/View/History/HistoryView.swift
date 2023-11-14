@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import RealmSwift
+import SwiftData
 import Factory
 import Kingfisher
 
@@ -15,21 +15,34 @@ struct HistoryView: View {
         
     @InjectedObject(\.historyViewModel) private var viewModel
     
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query(
+        sort: \GeneratedImage.date,
+        order: .reverse,
+        animation: .spring
+    ) private var images: [GeneratedImage]
+    
     var body: some View {
         NavigationSplitView {
             List(selection: $viewModel.selectedImage) {
-                ForEach(viewModel.images) { image in
+                ForEach(images) { image in
                     NavigationLink(image.prompt, value: image)
-                        .id(image.realmId)
                 }
-                .onDelete { viewModel.delete($0) }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        modelContext.delete(images[index])
+                    }
+                }
                 .id(HistoryViewScrollAnchor.items)
             }
             .toolbar {
-                if !viewModel.images.isEmpty {
+                if !images.isEmpty {
                     ToolbarItem(placement: .confirmationAction) {
                         Button {
-                            viewModel.deleteAll()
+                            for image in images {
+                                modelContext.delete(image)
+                            }
                             ImageCache.default.clearCache()
                         } label: {
                             Image(systemName: "trash")
@@ -41,8 +54,8 @@ struct HistoryView: View {
             .navigationTitle("history")
         } detail: {
             if let image = viewModel.selectedImage {
-                HistoryDetailsView(id: image.realmId)
-                    .id(image.realmId)
+                HistoryDetailsView(image: image)
+                    .id(image.id)
             } else {
                 Text("select_item")
                     .font(.title)

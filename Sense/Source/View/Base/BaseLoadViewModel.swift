@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Papyrus
 
 class BaseLoadViewModel: BaseViewModel {
     
@@ -29,31 +30,17 @@ class BaseLoadViewModel: BaseViewModel {
     
     func load() async {
         await load { [weak self] in
-            self?.beforeProvision() ?? false
-        } closure: { [weak self] in
             try await self?.provideData()
-        } endClosure: { [weak self] in
-            self?.providedData()
-        } afterAll: { [weak self] in
-            self?.doAfter()
         }
     }
     
-    private func load(
-        beforeClosure: () -> Bool,
-        closure: () async throws -> Void,
-        endClosure: () -> Void,
-        afterAll: () -> Void
-    ) async {
+    private func load(closure: () async throws -> Void) async {
+        withAnimation(.spring()) {
+            self.loading = true
+        }
+        
         do {
-            if beforeClosure() {
-                withAnimation(.spring()) {
-                    self.loading = true
-                }
-                
-                try await closure()
-                endClosure()
-            }
+            try await closure()
         } catch let error as ServerError {
             self.error = error.message
             await handleError(error)
@@ -67,27 +54,14 @@ class BaseLoadViewModel: BaseViewModel {
                 self.loading = false
             }
         }
-        
-        afterAll()
-    }
-    
-    func beforeProvision() -> Bool {
-        return true
     }
     
     func provideData() async throws {
         
     }
     
-    func providedData() {
-        
-    }
-    
-    func doAfter() {
-        
-    }
-    
     func handleError(_ error: Error) async {
-        
+        guard let error = error as? PapyrusError else { return }
+        self.error = error.message
     }
 }

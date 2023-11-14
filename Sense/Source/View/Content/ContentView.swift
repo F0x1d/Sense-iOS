@@ -19,9 +19,11 @@ struct ContentView: View {
     @InjectedObject(\.historyViewModel) private var historyViewModel
     @InjectedObject(\.settingsViewModel) private var settingsViewModel
     
+    @InjectedObject(\.settingsStore) private var settingsStore
+    
     var body: some View {
         ScrollViewReader { proxy in
-            if (!setupViewModel.setupDone) {
+            if (!settingsStore.setupDone) {
                 SetupView()
             } else {
                 TabView(selection: createTabViewBinding(scrollViewProxy: proxy)) {
@@ -61,8 +63,8 @@ struct ContentView: View {
                     if selectedTab == viewModel.selectedTab {
                         switch (selectedTab) {
                         case .chat:
-                            if chatsViewModel.selectedChatId != nil {
-                                chatsViewModel.selectedChatId = nil
+                            if chatsViewModel.selectedChat != nil {
+                                chatsViewModel.selectedChat = nil
                             } else {
                                 scrollViewProxy.scrollTo(ChatsViewScrollAnchor.chats, anchor: .bottom)
                             }

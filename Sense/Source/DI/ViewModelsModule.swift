@@ -7,7 +7,7 @@
 
 import Foundation
 import Factory
-import RealmSwift
+import SwiftData
 
 @MainActor extension Container {
     
@@ -16,38 +16,34 @@ import RealmSwift
     }
     
     var setupViewModel: Factory<SetupViewModel> {
-        self { SetupViewModel() }.singleton
+        self { SetupViewModel() }.scope(.shared)
     }
     
     var chatsViewModel: Factory<ChatsViewModel> {
-        self { ChatsViewModel() }.singleton
+        self { ChatsViewModel() }.scope(.shared)
     }
     
-    var chatViewModel: ParameterFactory<ObjectId, ChatViewModel> {
+    var chatViewModel: ParameterFactory<Chat, ChatViewModel> {
         self { ChatViewModel($0) }
     }
     
     var generateViewModel: Factory<GenerateViewModel> {
-        self { GenerateViewModel() }.singleton
+        self { GenerateViewModel() }.scope(.shared)
     }
     
     var historyViewModel: Factory<HistoryViewModel> {
-        self { HistoryViewModel() }.singleton
+        self { HistoryViewModel() }.scope(.shared)
     }
     
-    var historyDetailsViewModel: ParameterFactory<ObjectId, HistoryDetailsViewModel> {
+    var historyDetailsViewModel: ParameterFactory<GeneratedImage, HistoryDetailsViewModel> {
         self { HistoryDetailsViewModel($0) }
     }
     
     var settingsViewModel: Factory<SettingsViewModel> {
-        self { SettingsViewModel() }.singleton
+        self { SettingsViewModel() }.scope(.shared)
     }
     
     var cacheSettingsViewModel: Factory<CacheSettingsViewModel> {
         self { CacheSettingsViewModel() }
-    }
-    
-    var apiSettingsViewModel: Factory<APISettingsViewModel> {
-        self { APISettingsViewModel() }
     }
 }

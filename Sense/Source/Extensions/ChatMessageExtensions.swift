@@ -6,15 +6,15 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-extension RealmSwift.List<ChatMessage> {
+extension [ChatMessage] {
     var asMessages: [Message] {
         map { $0.asMessage }
     }
     
-    func insertMessage(_ message: ChatMessage) {
-        insert(message, at: startIndex)
+    var asSorted: [ChatMessage] {
+        sorted(by: { $0.date < $1.date })
     }
 }
 
