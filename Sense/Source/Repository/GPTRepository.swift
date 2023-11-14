@@ -6,65 +6,70 @@
 //
 
 import Foundation
+import Factory
+import Papyrus
 
 final class GPTRepository: BaseRepository {
     
-    func generateImage(prompt: String, count: Int, apiKey: String) async throws -> [String] {
+    private let gptApi: GPTAPI
+
+    private let settingsStore: SettingsStore
+        
+    override init() {
+        let settingsStore = Container.shared.settingsStore()
+        let provider = Provider(baseURL: "https://api.openai.com/v1/").modifyRequests { builder in
+            builder.addAuthorization(.bearer(settingsStore.apiKey))
+        }
+        
+        self.gptApi = GPTAPI(provider: provider)
+        self.settingsStore = settingsStore
+        super.init()
+    }
+    
+    func generateImage(prompt: String) async throws -> [String] {
+        let backgroundTaskId = await startBackgroundTask()
+        defer {
+            endBackgroundTaskNonAsync(backgroundTaskId)
+        }
+        
         let body = GenerateImageRequestBody(
             prompt: prompt,
-            n: count
+            n: settingsStore.responsesCount
         )
         
-        return try await openAIPost(
-            requestUrl: "https://api.openai.com/v1/images/generations", 
-            body: body, 
-            apiKey: apiKey,
-            resultType: GenerateImageResponse.self
-        ).data.map { imageData in imageData.url }
+        let res = try await gptApi.generateImage(body: body)
+        try checkResponseForError(res)
+        
+        return try res.decode(GenerateImageResponse.self, using: jsonDecoder).data.map { imageData in imageData.url }
     }
     
     func generateMessage(
-        model: GPTModel,
         messages: [Message],
-        apiKey: String,
         listener: @escaping StreamDataListener
     ) async throws {
         let body = GenerateMessageRequestBody(
             messages: messages,
-            model: model.apiModel
+            model: settingsStore.model.apiModel
         )
-        
-        try await openAIStream(
-            requestUrl: "https://api.openai.com/v1/chat/completions", 
-            body: body, 
-            apiKey: apiKey, 
-            listener: listener
-        )
-    }
-    
-    private func openAIPost<T : Decodable>(
-        requestUrl: String,
-        body: Encodable,
-        apiKey: String,
-        resultType: T.Type
-    ) async throws -> T {
-        try await post(
-            requestUrl: requestUrl,
-            body: body, 
-            resultType: resultType
-        ) { $0.appendApiKey(apiKey) }
-    }
-    
-    private func openAIStream(
-        requestUrl: String,
-        body: Encodable,
-        apiKey: String,
-        listener: @escaping StreamDataListener
-    ) async throws {
+                
         try await stream(
-            requestUrl: requestUrl,
+            requestUrl: "https://api.openai.com/v1/chat/completions",
             body: body, 
             listener: listener
-        ) { $0.appendApiKey(apiKey) }
+        ) { [weak self] request in
+            request.setValue("Bearer \(self?.settingsStore.apiKey ?? "")", forHTTPHeaderField: "Authorization")
+        }
+    }
+    
+    private func checkResponseForError(_ response: Response) throws {
+        guard response.error != nil else { return }
+        
+        guard let data = response.body else {
+            try response.validate()
+            return
+        }
+        
+        let errorResponse = try jsonDecoder.decode(ErrorResponse.self, from: data)
+        throw ServerError(message: errorResponse.error.message)
     }
 }

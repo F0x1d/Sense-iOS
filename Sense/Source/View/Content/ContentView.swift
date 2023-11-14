@@ -19,9 +19,11 @@ struct ContentView: View {
     @InjectedObject(\.historyViewModel) private var historyViewModel
     @InjectedObject(\.settingsViewModel) private var settingsViewModel
     
+    @InjectedObject(\.settingsStore) private var settingsStore
+    
     var body: some View {
         ScrollViewReader { proxy in
-            if (!setupViewModel.setupDone) {
+            if (!settingsStore.setupDone) {
                 SetupView()
             } else {
                 TabView(selection: createTabViewBinding(scrollViewProxy: proxy)) {

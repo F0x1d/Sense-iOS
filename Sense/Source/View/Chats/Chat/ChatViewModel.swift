@@ -17,7 +17,6 @@ class ChatViewModel: BaseLoadViewModel {
     @Published var generating = false
             
     @Injected(\.gptRepository) private var gptRepository
-    @Injected(\.userDefaults) private var userDefaults
     @Injected(\.modelContext) private var modelContext
     
     init(_ chat: Chat) {
@@ -37,7 +36,7 @@ class ChatViewModel: BaseLoadViewModel {
         text = ""
         
         let currentChatMessages = chat.messages
-        let sortChatMessagesTask = Task { @RepositoryActor in
+        let sortChatMessagesTask = Task { @ChatViewModelActor in
             currentChatMessages.asSorted.asMessages
         }
         
@@ -46,11 +45,8 @@ class ChatViewModel: BaseLoadViewModel {
         chat.messages.append(responseMessage)
         chat.date = .now
                                 
-        let selectedModel = GPTModel(rawValue: userDefaults.string(forKey: APISettingsViewModel.MODEL) ?? "")
         try await gptRepository.generateMessage(
-            model: selectedModel ?? APISettingsViewModel.MODEL_DEFAULT,
-            messages: await sortChatMessagesTask.value,
-            apiKey: userDefaults.string(forKey: APISettingsViewModel.API_KEY) ?? APISettingsViewModel.API_KEY_DEFAULT
+            messages: await sortChatMessagesTask.value
         ) { (content, cancelled) in
             if responseMessage.isDeleted {
                 cancelled = true
@@ -65,6 +61,8 @@ class ChatViewModel: BaseLoadViewModel {
     }
     
     override func handleError(_ error: Error) async {
+        await super.handleError(error)
+        
         var descriptor = FetchDescriptor<ChatMessage>()
         
         let chatId = chat.persistentModelID
@@ -80,4 +78,8 @@ class ChatViewModel: BaseLoadViewModel {
             message.generating = false
         }
     }
+}
+
+@globalActor actor ChatViewModelActor {
+    static var shared = ChatViewModelActor()
 }

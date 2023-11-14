@@ -8,7 +8,7 @@
 import Foundation
 import Factory
 
-@RepositoryActor extension Container {
+extension Container {
     var gptRepository: Factory<GPTRepository> {
         self { GPTRepository() }.singleton
     }

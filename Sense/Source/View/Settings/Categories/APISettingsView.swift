@@ -11,15 +11,15 @@ import Factory
 
 struct APISettingsView: View {
     
-    @InjectedObject(\.apiSettingsViewModel) private var viewModel
+    @InjectedObject(\.settingsStore) private var settingsStore
     
     var body: some View {
         List {
             Section("API " + String(localized: "key")) {
-                ApiKeyFieldView(apiKeyText: $viewModel.apiKey)
+                ApiKeyFieldView(apiKeyText: $settingsStore.apiKey)
             }
             
-            Picker(selection: $viewModel.model) {
+            Picker(selection: $settingsStore.model) {
                 ForEach(GPTModel.allCases) { model in
                     GPTModelView(model: model)
                 }
@@ -31,7 +31,7 @@ struct APISettingsView: View {
             Section("responses") {
                 SettingsTextFieldWrapper(
                     imageSystemName: "list.number", 
-                    textFieldView: TextField("responses_count", value: $viewModel.responsesCount, formatter: NumberFormatter()),
+                    textFieldView: TextField("responses_count", value: $settingsStore.responsesCount, formatter: NumberFormatter()),
                     keyboardType: .numberPad
                 )
             }

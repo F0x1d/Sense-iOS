@@ -33,7 +33,7 @@ struct ApiKeyEnterView: View {
             if !viewModel.apiKey.isEmpty {
                 FilledButton(label: "done") {
                     withAnimation {
-                        viewModel.setupDone = true
+                        viewModel.closeSetup()
                     }
                 }
                 .padding()

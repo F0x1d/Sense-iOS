@@ -16,11 +16,11 @@ import SwiftData
     }
     
     var setupViewModel: Factory<SetupViewModel> {
-        self { SetupViewModel() }.singleton
+        self { SetupViewModel() }.scope(.shared)
     }
     
     var chatsViewModel: Factory<ChatsViewModel> {
-        self { ChatsViewModel() }.singleton
+        self { ChatsViewModel() }.scope(.shared)
     }
     
     var chatViewModel: ParameterFactory<Chat, ChatViewModel> {
@@ -28,11 +28,11 @@ import SwiftData
     }
     
     var generateViewModel: Factory<GenerateViewModel> {
-        self { GenerateViewModel() }.singleton
+        self { GenerateViewModel() }.scope(.shared)
     }
     
     var historyViewModel: Factory<HistoryViewModel> {
-        self { HistoryViewModel() }.singleton
+        self { HistoryViewModel() }.scope(.shared)
     }
     
     var historyDetailsViewModel: ParameterFactory<GeneratedImage, HistoryDetailsViewModel> {
@@ -40,14 +40,10 @@ import SwiftData
     }
     
     var settingsViewModel: Factory<SettingsViewModel> {
-        self { SettingsViewModel() }.singleton
+        self { SettingsViewModel() }.scope(.shared)
     }
     
     var cacheSettingsViewModel: Factory<CacheSettingsViewModel> {
         self { CacheSettingsViewModel() }
-    }
-    
-    var apiSettingsViewModel: Factory<APISettingsViewModel> {
-        self { APISettingsViewModel() }
     }
 }
