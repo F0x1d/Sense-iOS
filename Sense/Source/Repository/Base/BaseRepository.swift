@@ -11,9 +11,7 @@ import Factory
 import Papyrus
 
 class BaseRepository {
-    
     typealias RequestModifier = (inout URLRequest) -> Void
-    typealias StreamDataListener = (String, inout Bool) async throws -> Void
     
     let session: URLSession
     
@@ -29,9 +27,8 @@ class BaseRepository {
     func stream<R : Encodable>(
         requestUrl: String,
         body: R,
-        listener: @escaping StreamDataListener,
         _ modifier: @escaping RequestModifier = { _ in }
-    ) async throws {
+    ) async throws -> AsyncCompactMapSequence<AsyncLineSequence<URLSession.AsyncBytes>, String> {
         let backgroundTaskId = await startBackgroundTask()
         defer {
             endBackgroundTaskNonAsync(backgroundTaskId)
@@ -61,23 +58,17 @@ class BaseRepository {
             }
         }
         
-        var content = ""
-        var cancelled = false
-        for try await line in result.lines {
+        return result.lines.compactMap { [weak self] line in
             let formattedLine = line
                 .replacingOccurrences(of: "data: ", with: "")
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             
-            if let response = try? jsonDecoder.decode(
+            guard let response = try? self?.jsonDecoder.decode(
                 GenerateMessageResponse.self,
                 from: formattedLine.data(using: .utf8, allowLossyConversion: false)!
-            ) {
-                content += response.choices.first?.delta?.content ?? ""
-            }
+            ) else { return nil }
             
-            try await listener(content, &cancelled)
-            
-            if cancelled { break }
+            return response.choices.first?.delta?.content ?? ""
         }
     }
 }

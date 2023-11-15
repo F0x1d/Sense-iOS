@@ -44,18 +44,16 @@ final class GPTRepository: BaseRepository {
     }
     
     func generateMessage(
-        messages: [Message],
-        listener: @escaping StreamDataListener
-    ) async throws {
+        messages: [Message]
+    ) async throws -> AsyncCompactMapSequence<AsyncLineSequence<URLSession.AsyncBytes>, String> {
         let body = GenerateMessageRequestBody(
             messages: messages,
             model: settingsStore.model.apiModel
         )
                 
-        try await stream(
+        return try await stream(
             requestUrl: "https://api.openai.com/v1/chat/completions",
-            body: body, 
-            listener: listener
+            body: body
         ) { [weak self] request in
             request.setValue("Bearer \(self?.settingsStore.apiKey ?? "")", forHTTPHeaderField: "Authorization")
         }

@@ -44,14 +44,13 @@ class ChatViewModel: BaseLoadViewModel {
         
         chat.messages.append(responseMessage)
         chat.date = .now
-                                
-        try await gptRepository.generateMessage(
-            messages: await sortChatMessagesTask.value
-        ) { (content, cancelled) in
+        
+        var content = ""
+        for try await block in try await gptRepository.generateMessage(messages: await sortChatMessagesTask.value) {
             if responseMessage.isDeleted {
-                cancelled = true
                 return
             }
+            content += block
             
             responseMessage.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
         }
