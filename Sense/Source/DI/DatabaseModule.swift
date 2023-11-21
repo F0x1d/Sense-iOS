@@ -10,6 +10,7 @@ import Factory
 import SwiftData
 
 extension Container {
+    
     var modelContainer: Factory<ModelContainer> {
         self { try! ModelContainer(for: Chat.self, ChatMessage.self, GeneratedImage.self) }.singleton
     }

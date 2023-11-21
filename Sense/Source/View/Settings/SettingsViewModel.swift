@@ -7,6 +7,6 @@
 
 import Foundation
 
-class SettingsViewModel: BaseViewModel {
+final class SettingsViewModel: BaseViewModel {
     @Published var selectedScreen: SettingsScreen? = nil
 }

@@ -13,7 +13,7 @@ import Factory
 @main
 struct SenseApp: SwiftUI.App {
     
-    @State private var modelContainer = Container.shared.modelContainer()
+    @Injected(\.modelContainer) private var modelContainer
     
     var body: some Scene {
         WindowGroup {

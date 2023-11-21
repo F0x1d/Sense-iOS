@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 import Factory
 
-class SetupViewModel: BaseViewModel {
+final class SetupViewModel: BaseViewModel {
+    
     @Published var path = NavigationPath()
     
     @Published var apiKey = ""

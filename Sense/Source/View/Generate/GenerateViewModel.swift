@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 import Factory
 
-class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
+final class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
     
     @Published var prompt = ""
     
@@ -19,7 +19,7 @@ class GenerateViewModel: BaseDataLoadingViewModel<[String]> {
     
     override func provideData() async throws -> [String]? {
         withAnimation {
-            data = nil
+            self.data = nil
         }
         
         let urls = try await gptRepository.generateImage(prompt: prompt)

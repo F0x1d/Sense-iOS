@@ -12,6 +12,7 @@ import AlertKit
 import Factory
 
 struct ChatView: View {
+    
     @StateObject private var viewModel: ChatViewModel
     
     @Environment(\.modelContext) private var modelContext

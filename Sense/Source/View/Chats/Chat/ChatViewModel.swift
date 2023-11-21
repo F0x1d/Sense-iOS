@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 import Factory
 
-class ChatViewModel: BaseLoadViewModel {
+final class ChatViewModel: BaseLoadViewModel {
     let chat: Chat
     
     @Published var text = ""

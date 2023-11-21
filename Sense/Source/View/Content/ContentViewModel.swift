@@ -8,6 +8,6 @@
 import Foundation
 import SwiftUI
 
-class ContentViewModel: BaseViewModel {
+final class ContentViewModel: BaseViewModel {
     @Published var selectedTab = ContentViewTab.chat
 }

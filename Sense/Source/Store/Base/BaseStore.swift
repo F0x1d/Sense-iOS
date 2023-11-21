@@ -7,6 +7,6 @@
 
 import Foundation
 
-class BaseStore {
+class BaseStore: ObservableObject {
     
 }

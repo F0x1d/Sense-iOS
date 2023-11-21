@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Factory
 import Papyrus
 
 class BaseLoadViewModel: BaseViewModel {
@@ -21,6 +22,8 @@ class BaseLoadViewModel: BaseViewModel {
             error = nil
         }
     }
+    
+    @Injected(\.decoder) private var decoder
     
     func startLoading() {
         Task { [weak self] in
@@ -45,7 +48,6 @@ class BaseLoadViewModel: BaseViewModel {
             self.error = error.message
             await handleError(error)
         } catch let error {
-            self.error = error.localizedDescription
             await handleError(error)
         }
         
@@ -61,7 +63,17 @@ class BaseLoadViewModel: BaseViewModel {
     }
     
     func handleError(_ error: Error) async {
-        guard let error = error as? PapyrusError else { return }
-        self.error = error.message
+        guard let error = error as? PapyrusError else {
+            self.error = error.localizedDescription
+            return
+        }
+        var message = error.message
+                
+        if let errorResponse = error.response,
+           let responseError = try? errorResponse.decode(ErrorResponse.self, using: decoder) {
+            message = responseError.error.message
+        }
+        
+        self.error = message
     }
 }

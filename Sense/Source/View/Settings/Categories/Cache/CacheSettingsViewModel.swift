@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 
-class CacheSettingsViewModel: BaseViewModel {
+final class CacheSettingsViewModel: BaseViewModel {
     
     @Published var cacheSize = -1
             

@@ -8,6 +8,6 @@
 import Foundation
 import SwiftUI
 
-class ChatsViewModel: BaseViewModel {
+final class ChatsViewModel: BaseViewModel {
     @Published var selectedChat: Chat? = nil
 }

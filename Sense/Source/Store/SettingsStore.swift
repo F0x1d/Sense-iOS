@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-final class SettingsStore: BaseObservableObjectStore {
+final class SettingsStore: BaseStore {
+    
     static let SETUP_DONE_KEY = "setup_done"
     static let SETUP_DONE_DEFAULT = false
     

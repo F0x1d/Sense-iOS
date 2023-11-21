@@ -11,5 +11,5 @@ import Papyrus
 @API
 protocol GPT {
     @POST("images/generations")
-    func generateImage(body: Body<GenerateImageRequestBody>) async throws -> Response
+    func generateImage(body: Body<GenerateImageRequestBody>) async throws -> GenerateImageResponse
 }

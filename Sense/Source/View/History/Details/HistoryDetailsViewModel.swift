@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class HistoryDetailsViewModel: BaseViewModel {
+final class HistoryDetailsViewModel: BaseViewModel {
     let image: GeneratedImage
     
     init(_ image: GeneratedImage) {

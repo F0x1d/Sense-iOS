@@ -13,16 +13,9 @@ import Papyrus
 class BaseRepository {
     typealias RequestModifier = (inout URLRequest) -> Void
     
-    let session: URLSession
+    @Injected(\.urlSession) var session: URLSession
     
     @Injected(\.decoder) var jsonDecoder
-    
-    init() {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 60 * 10
-        
-        session = URLSession(configuration: configuration)
-    }
     
     func stream<R : Encodable>(
         requestUrl: String,
@@ -55,6 +48,8 @@ class BaseRepository {
                 ) {
                     throw ServerError(message: errorResponse.error.message)
                 }
+                
+                throw ServerError(message: error)
             }
         }
         

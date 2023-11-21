@@ -8,6 +8,6 @@
 import Foundation
 import SwiftUI
 
-class HistoryViewModel: BaseViewModel {
+final class HistoryViewModel: BaseViewModel {
     @Published var selectedImage: GeneratedImage? = nil
 }

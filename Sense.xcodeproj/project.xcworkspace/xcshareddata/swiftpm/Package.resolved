@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/joshuawright11/papyrus",
       "state" : {
-        "revision" : "f591dab2401688856b15aafff9dfa396ef2637b2",
-        "version" : "0.6.1"
+        "revision" : "b9bdc84121ca6d5b383ae1d356512fdec8ab4407",
+        "version" : "0.6.2"
       }
     },
     {
