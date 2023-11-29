@@ -70,8 +70,14 @@ class BaseLoadViewModel: BaseViewModel {
         var message = error.message
                 
         if let errorResponse = error.response,
-           let responseError = try? errorResponse.decode(ErrorResponse.self, using: decoder) {
-            message = responseError.error.message
+           let data = errorResponse.body,
+           let string = String(data: data, encoding: .utf8) {
+            
+            message = string
+            
+            if let responseError = try? errorResponse.decode(ErrorResponse.self, using: decoder) {
+                message = responseError.error.message
+            }
         }
         
         self.error = message
