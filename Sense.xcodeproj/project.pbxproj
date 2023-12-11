@@ -77,7 +77,6 @@
 		A787D1F72A3CEE2400966E63 /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A787D1CD2A3CEE2400966E63 /* ChatsViewModel.swift */; };
 		A787D1F82A3CEE2400966E63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A787D1CE2A3CEE2400966E63 /* ContentView.swift */; };
 		A787D1F92A3CEE2400966E63 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A787D1D02A3CEE2400966E63 /* BaseViewModel.swift */; };
-		A787D2042A3CF08F00966E63 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A787D2032A3CF08F00966E63 /* Alamofire */; };
 		A787D2442A3D1CE400966E63 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A787D2462A3D1CE400966E63 /* Localizable.strings */; };
 		A7AE6BA82A94E8D200CCA29B /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AE6BA52A94E8D100CCA29B /* 2.png */; };
 		A7AE6BA92A94E8D200CCA29B /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AE6BA62A94E8D200CCA29B /* 1.png */; };
@@ -179,7 +178,6 @@
 				A7179A6F2B0CFDF8008C527C /* Papyrus in Frameworks */,
 				A757A0052A55C9C200492177 /* Factory in Frameworks */,
 				A757A0082A55C9EF00492177 /* AlertKit in Frameworks */,
-				A787D2042A3CF08F00966E63 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +644,6 @@
 			);
 			name = Sense;
 			packageProductDependencies = (
-				A787D2032A3CF08F00966E63 /* Alamofire */,
 				A757A0042A55C9C200492177 /* Factory */,
 				A757A0072A55C9EF00492177 /* AlertKit */,
 				A70F992F2A66D003009AED6D /* Kingfisher */,
@@ -682,7 +679,6 @@
 			);
 			mainGroup = A787D1532A3CED9F00966E63;
 			packageReferences = (
-				A787D2022A3CF08F00966E63 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A757A0032A55C9C200492177 /* XCRemoteSwiftPackageReference "Factory" */,
 				A757A0062A55C9EF00492177 /* XCRemoteSwiftPackageReference "AlertKit" */,
 				A70F992E2A66D003009AED6D /* XCRemoteSwiftPackageReference "Kingfisher" */,
@@ -1064,14 +1060,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		A787D2022A3CF08F00966E63 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.6.4;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1094,11 +1082,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A757A0062A55C9EF00492177 /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
-		};
-		A787D2032A3CF08F00966E63 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A787D2022A3CF08F00966E63 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
