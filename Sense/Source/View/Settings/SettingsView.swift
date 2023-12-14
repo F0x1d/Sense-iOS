@@ -34,6 +34,7 @@ struct SettingsView: View {
                 }
             }
             .listStyle(InsetGroupedListStyle())
+            .toolbar(removing: .sidebarToggle)
             .navigationTitle("settings")
         } detail: {
             switch (viewModel.selectedScreen) {

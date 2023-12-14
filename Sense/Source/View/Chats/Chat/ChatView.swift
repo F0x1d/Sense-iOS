@@ -81,6 +81,7 @@ struct ChatView: View {
                 }
                 .listStyle(.plain)
             }
+            .defaultScrollAnchor(.bottom)
             
             if !messages.isEmpty { Divider() }
             

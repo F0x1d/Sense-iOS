@@ -19,14 +19,12 @@ struct APISettingsView: View {
                 ApiKeyFieldView(apiKeyText: $settingsStore.apiKey)
             }
             
-            Picker(selection: $settingsStore.model) {
-                ForEach(GPTModel.allCases) { model in
-                    GPTModelView(model: model)
-                }
-            } label: {
-                Text("chat_model")
+            Section("chat_model") {
+                SettingsTextFieldWrapper(
+                    imageSystemName: "person",
+                    textFieldView: TextField("chat_model", text: $settingsStore.model)
+                )
             }
-            .pickerStyle(.inline)
             
             Section("responses") {
                 SettingsTextFieldWrapper(

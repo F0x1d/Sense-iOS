@@ -17,10 +17,6 @@ final class SetupViewModel: BaseViewModel {
     
     @Injected(\.settingsStore) private var settingsStore
     
-    func saveModel(_ model: GPTModel) {
-        settingsStore.model = model
-    }
-    
     func closeSetup() {
         settingsStore.apiKey = apiKey
         settingsStore.setupDone = true
