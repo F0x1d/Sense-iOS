@@ -9,5 +9,6 @@ import Foundation
 
 struct GenerateImageRequestBody: Encodable {
     let prompt: String
+    let model: String = "dall-e-3"
     let n: Int
 }
