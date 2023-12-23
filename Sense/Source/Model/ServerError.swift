@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct ServerError: Error {
+struct ServerError: LocalizedError {
     let message: String
+    
+    var errorDescription: String? {
+        message
+    }
 }

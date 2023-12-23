@@ -63,6 +63,8 @@ class BaseLoadViewModel: BaseViewModel {
     }
     
     func handleError(_ error: Error) async {
+        print(error)
+        
         guard let error = error as? PapyrusError else {
             self.error = error.localizedDescription
             return

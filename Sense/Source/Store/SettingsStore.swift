@@ -17,7 +17,7 @@ final class SettingsStore: BaseStore {
     static let API_KEY_DEFAULT = ""
     
     static let MODEL = "model"
-    static let MODEL_DEFAULT = "gpt-3.5"
+    static let MODEL_DEFAULT = "gpt-3.5-turbo"
     
     static let RESPONSES_COUNT = "responses_count"
     static let RESPONSES_COUNT_DEFAULT = 1
