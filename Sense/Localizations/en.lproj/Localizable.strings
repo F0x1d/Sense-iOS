@@ -36,6 +36,7 @@
 "inspiration" = "Inspiration";
 "models" = "Models";
 "chat_model" = "Chat model";
+"images_model" = "Images model";
 "responses" = "Responses";
 "responses_count" = "Responses count";
 "welcome" = "Welcome to AI";
@@ -53,9 +54,4 @@
 "what_for" = "What for?";
 "what_for_answer" = "Key is required to access OpenAI API. It helps API to understand who you are and to authorize you";
 "done" = "Done";
-"select_model" = "Select model";
-"gpt-4-desc" = "New advanced model, but may be unavailable on your account";
-"gpt-4-32k-desc" = "Same as above, but more symbols for chat at extended cost";
-"gpt-3.5-desc" = "Default model";
-"gpt-3.5-16k-desc" = "Default model, but more symbols for chat at extended cost";
 "in_message_error" = "[Sense Error] %@";

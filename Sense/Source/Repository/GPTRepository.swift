@@ -22,7 +22,7 @@ final class GPTRepository: BaseRepository {
         
         let body = GenerateImageRequestBody(
             prompt: prompt,
-            n: settingsStore.responsesCount
+            model: settingsStore.imagesModel
         )
         
         return try await gptApi.generateImage(body: body).data.map { imageData in 
@@ -35,7 +35,7 @@ final class GPTRepository: BaseRepository {
     ) async throws -> AsyncCompactMapSequence<AsyncLineSequence<URLSession.AsyncBytes>, String> {
         let body = GenerateMessageRequestBody(
             messages: messages,
-            model: settingsStore.model
+            model: settingsStore.chatModel
         )
                 
         return try await stream(

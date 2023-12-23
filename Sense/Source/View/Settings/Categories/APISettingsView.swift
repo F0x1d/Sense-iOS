@@ -19,18 +19,15 @@ struct APISettingsView: View {
                 ApiKeyFieldView(apiKeyText: $settingsStore.apiKey)
             }
             
-            Section("chat_model") {
+            Section("models") {
                 SettingsTextFieldWrapper(
                     imageSystemName: "person",
-                    textFieldView: TextField("chat_model", text: $settingsStore.model)
+                    textFieldView: TextField("chat_model", text: $settingsStore.chatModel)
                 )
-            }
-            
-            Section("responses") {
+                
                 SettingsTextFieldWrapper(
-                    imageSystemName: "list.number", 
-                    textFieldView: TextField("responses_count", value: $settingsStore.responsesCount, formatter: NumberFormatter()),
-                    keyboardType: .numberPad
+                    imageSystemName: "pencil",
+                    textFieldView: TextField("images_model", text: $settingsStore.imagesModel)
                 )
             }
         }
