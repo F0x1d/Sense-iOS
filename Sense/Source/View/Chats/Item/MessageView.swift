@@ -12,58 +12,35 @@ struct MessageView: View {
     let message: ChatMessage
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                if message.fromUser {
-                    Spacer()
-                }
-                
-                Text(message.parseRole)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 19)
-                
-                if message.fromChatGPT {
-                    Spacer()
-                }
-            }
-            Spacer()
-                .frame(height: 4)
+        HStack(
+            alignment: .top,
+            spacing: 0
+        ) {
+            Circle()
+                .fill(message.fromUser ? Color.gray.opacity(0.5) : .accentColor)
+                .frame(width: 20, height: 20)
+                .padding(.trailing, 15)
             
-            HStack {
-                if message.fromUser {
+            VStack(
+                alignment: .leading,
+                spacing: 8
+            ) {
+                HStack {
+                    Text(message.parseRole)
+                        .foregroundStyle(.secondary)
+                    
                     Spacer()
                 }
                 
                 if message.content.isEmpty {
                     ProgressView()
-                        .asMessage(with: message)
                 } else {
                     Text(message.content)
-                        .foregroundStyle(message.fromUser ? .white : .primary)
-                        .asMessage(with: message)
-                }
-                
-                if message.fromChatGPT {
-                    Spacer()
                 }
             }
-            .padding(.horizontal, 7)
         }
-    }
-}
-
-fileprivate extension View {
-    func asMessage(with message: ChatMessage) -> some View {
-        self
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(message.fromUser ? .blue : Color(.secondarySystemBackground))
-            .clipShape(RoundedCorners(
-                tl: 20,
-                tr: 20,
-                bl: message.fromChatGPT ? 5 : 20,
-                br: message.fromUser ? 5 : 20
-            ))
+        .padding(.horizontal, 15)
+        .padding(.vertical, 10)
+        .contentShape(Rectangle())
     }
 }

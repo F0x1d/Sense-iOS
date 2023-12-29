@@ -58,13 +58,14 @@ struct ChatView: View {
                                     Label("share", systemImage: "square.and.arrow.up")
                                 }
                                 
+                                Divider()
+                                
                                 Button(role: .destructive) {
                                     modelContext.delete(message)
                                 } label: {
                                     Label("delete", systemImage: "trash")
                                 }
                             }
-                            .padding(.vertical, 5)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .id(message)
@@ -77,11 +78,12 @@ struct ChatView: View {
                     }
                 }
                 .onChange(of: messages.last?.content, initial: false) { old, new in
-                    proxy.scrollTo(messages.last, anchor: .bottom)
+                    withAnimation(nil) {
+                        proxy.scrollTo(messages.last, anchor: .bottom)
+                    }
                 }
                 .listStyle(.plain)
             }
-            .defaultScrollAnchor(.bottom)
             
             if !messages.isEmpty { Divider() }
             

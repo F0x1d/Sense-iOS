@@ -15,7 +15,7 @@ final class ChatViewModel: BaseLoadViewModel {
     
     @Published var text = ""
     @Published var generating = false
-            
+    
     @Injected(\.gptRepository) private var gptRepository
     @Injected(\.modelContext) private var modelContext
     
